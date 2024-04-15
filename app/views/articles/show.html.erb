@@ -2,24 +2,29 @@
 
 <p><%= @article.body %></p>
 
-
 <ul>
   <li><%= link_to "Edit", edit_article_path(@article) %></li>
-    <li><%= link_to "Destroy", article_path(@article), data: {
+  <li><%= link_to "Destroy", article_path(@article), data: {
                     turbo_method: :delete,
                     turbo_confirm: "Are you sure?"
                   } %></li>
 </ul>
 
 <h2>Comments</h2>
-<%= render @article.comments %>
+<% @article.comments.each do |comment| %>
+  <p>
+    <strong>Commenter:</strong>
+    <%= comment.commenter %>
+  </p>
+
+  <p>
+    <strong>Comment:</strong>
+    <%= comment.body %>
+  </p>
+<% end %>
 
 <h2>Add a comment:</h2>
-<%= render @article.comments %>
-
-
-  <!-- This is was prior to adding partial called _forms
-  <%= form_with model: [ @article, @article.comments.build ] do |form| %>
+<%= form_with model: [ @article, @article.comments.build ] do |form| %>
   <p>
     <%= form.label :commenter %><br>
     <%= form.text_field :commenter %>
@@ -32,4 +37,3 @@
     <%= form.submit %>
   </p>
 <% end %>
--->
